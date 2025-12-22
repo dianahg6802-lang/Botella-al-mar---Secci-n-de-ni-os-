@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Garu con audio</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      overflow: hidden;
+    }
+    .wrap {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+      padding: 0;
+    }
+    #garu {
+      width: 220px;           /* ajusta tamaño aquí */
+      cursor: pointer;
+      user-select: none;
+      -webkit-user-drag: none;
+      touch-action: manipulation;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <!-- GIF clickeable -->
+    <img
+      id="garu"
+      src="https://raw.githubusercontent.com/dianahg6802-lang/Botella-al-mar---Secci-n-de-ni-os-/main/Que_la_gaviota_mueva_el_pico_mientras_habla_y_que_con_una_de_las_alas_haga_una_pose_de_duda_y_lueg_seed3640211887-ezgif.com-gif-maker.gif"
+      alt="Garu"
+    />
+
+    <!-- Audio (sin autoplay) -->
+    <audio id="garuAudio" preload="auto">
+      <source
+        src="https://raw.githubusercontent.com/dianahg6802-lang/Botella-al-mar---Secci-n-de-ni-os-/main/primer%20audio%20banner%20ni%C3%B1os.m4a"
+        type="audio/mp4"
+      />
+      Tu navegador no soporta audio.
+    </audio>
+  </div>
+
+  <script>
+    (function () {
+      const img = document.getElementById("garu");
+      const audio = document.getElementById("garuAudio");
+
+      function playFromStart() {
+        audio.pause();
+        audio.currentTime = 0;
+
+        const p = audio.play();
+        if (p && typeof p.catch === "function") {
+          p.catch((e) => console.log("No se pudo reproducir:", e));
+        }
+      }
+
+      img.addEventListener("click", playFromStart);
+      img.addEventListener("touchstart", playFromStart, { passive: true });
+    })();
+  </script>
+</body>
+</html>
