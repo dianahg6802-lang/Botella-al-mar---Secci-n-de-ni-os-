@@ -20,7 +20,8 @@
       padding: 0;
     }
     #garu {
-      width: 220px;           /* ajusta tamaño aquí */
+      width: 420px;          /* 🔥 AQUÍ SE AGRANDÓ */
+      max-width: 45vw;       /* se adapta al tamaño del banner */
       cursor: pointer;
       user-select: none;
       -webkit-user-drag: none;
@@ -55,11 +56,7 @@
       function playFromStart() {
         audio.pause();
         audio.currentTime = 0;
-
-        const p = audio.play();
-        if (p && typeof p.catch === "function") {
-          p.catch((e) => console.log("No se pudo reproducir:", e));
-        }
+        audio.play().catch(() => {});
       }
 
       img.addEventListener("click", playFromStart);
