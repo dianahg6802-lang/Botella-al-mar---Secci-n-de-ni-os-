@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Garu con audio – Cambio climático</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      overflow: hidden;
+    }
+
+    .wrap {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: flex-end;      /* pegado abajo */
+      justify-content: flex-start;/* pegado a la izquierda */
+    }
+
+    #garu {
+      height: 100%;        /* ocupa el 100% del alto del iframe */
+      width: auto;         /* mantiene proporción */
+      max-height: 100%;
+      max-width: 100%;
+      cursor: pointer;
+      user-select: none;
+      -webkit-user-drag: none;
+      touch-action: manipulation;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <!-- GIF clickeable -->
+    <img
+      id="garu"
+      src="https://raw.githubusercontent.com/dianahg6802-lang/Botella-al-mar---Secci-n-de-ni-os-/main/Que_la_gaviota_salude_y_mueva_el_pico_para_hablar_mientras_sonr_e_seed15680550011-ezgif.com-gif-to-apng-converter.gif"
+      alt="Garu"
+    />
+
+    <!-- Audio (sin autoplay) -->
+    <audio id="garuAudio" preload="auto">
+      <source
+        src="https://raw.githubusercontent.com/dianahg6802-lang/Botella-al-mar---Secci-n-de-ni-os-/main/Cambio%20clim%C3%A1tico%20garu.m4a"
+        type="audio/mp4"
+      />
+      Tu navegador no soporta audio.
+    </audio>
+  </div>
+
+  <script>
+    (function () {
+      const img = document.getElementById("garu");
+      const audio = document.getElementById("garuAudio");
+
+      function playFromStart() {
+        audio.pause();
+        audio.currentTime = 0;
+        audio.play().catch(() => {});
+      }
+
+      img.addEventListener("click", playFromStart);
+      img.addEventListener("touchstart", playFromStart, { passive: true });
+    })();
+  </script>
+</body>
+</html>
