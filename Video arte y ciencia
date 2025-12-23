@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      overflow: hidden;
+    }
+    .wrap {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain; /* cambia a "cover" si quieres que llene recortando */
+      background: transparent;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <video
+      src="https://raw.githubusercontent.com/dianahg6802-lang/Botella-al-mar---Secci-n-de-ni-os-/main/ONLY%20ART%20MIGHT%20SAVE%20US.mp4"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+      controls
+    ></video>
+  </div>
+</body>
+</html>
