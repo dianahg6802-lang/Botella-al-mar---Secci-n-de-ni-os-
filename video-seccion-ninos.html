@@ -1,20 +1,57 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Video sección niños</title>
 
   <style>
-    html, body { margin:0; padding:0; width:100%; height:100%; background:transparent; }
-    video { width:100%; height:100%; object-fit:contain; }
+    /* RESET TOTAL */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;   /* 🔥 mata el scroll */
+      background: transparent;
+    }
+
+    /* CONTENEDOR FIJO */
+    .wrap {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+      display: block;     /* 🔥 elimina el pixel fantasma */
+      object-fit: contain; /* cambia a cover si quieres que llene */
+      background: black;
+    }
   </style>
 </head>
 
 <body>
-  <video controls playsinline preload="metadata">
-    <source src="https://raw.githubusercontent.com/dianahg6802-lang/Botella-al-mar---Secci-n-de-ni-os-/main/WhatsApp%20Video%202025-12-22%20at%205.42.28%20PM%20%281%29%201%20%281%29%20%281%29.mp4" type="video/mp4">
-    Tu navegador no soporta video.
-  </video>
+  <div class="wrap">
+    <video
+      playsinline
+      preload="metadata"
+      controls
+    >
+      <source
+        src="https://raw.githubusercontent.com/dianahg6802-lang/Botella-al-mar---Secci-n-de-ni-os-/main/WhatsApp%20Video%202025-12-22%20at%205.42.28%20PM%20%281%29%201%20%281%29%20%281%29.mp4"
+        type="video/mp4"
+      />
+      Tu navegador no soporta video.
+    </video>
+  </div>
 </body>
 </html>
