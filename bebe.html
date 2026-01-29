@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Ti, Mi Amor 💫</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --night-sky: #0a0e27;
+            --deep-purple: #1a1435;
+            --star-white: #ffffff;
+            --soft-pink: #ffc2d1;
+            --gold: #ffd89b;
+            --envelope-back: #c19a6b;
+            --envelope-front: #d4af7a;
+            --paper: #fef9f3;
+            --subtle-border: #d4a5a5;
+        }
+
+        body {
+            font-family: Georgia, serif;
+            background: linear-gradient(135deg, var(--night-sky) 0%, var(--deep-purple) 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Starry Background */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Envelope Container */
+        .envelope-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 100;
+            transition: all 1s ease;
+        }
+
+        .envelope-container.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: translate(-50%, -50%) scale(0.5);
+        }
+
+        .envelope {
+            width: 280px;
+            height: 180px;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .envelope:hover {
+            transform: scale(1.05);
+        }
+
+        .envelope-back {
+            width: 100%;
+            height: 100%;
+            background: var(--envelope-back);
+            position: relative;
+            border: 2px solid #a8865c;
+        }
+
+        .envelope-flap {
+            width: 0;
+            height: 0;
+            border-left: 140px solid transparent;
+            border-right: 140px solid transparent;
+            border-top: 100px solid var(--envelope-front);
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform-origin: top center;
+            transition: transform 0.8s ease;
+            border-top-color: var(--envelope-front);
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .envelope.opening .envelope-flap {
+            transform: rotateX(180deg);
+        }
+
+        .envelope-front {
+            width: 100%;
+            height: 50%;
+            background: var(--envelope-front);
+            position: absolute;
+            bottom: 0;
+            border: 2px solid #a8865c;
+            border-top: none;
+        }
+
+        .wax-seal {
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, #8b0000, #5c0000);
+            border-radius: 50%;
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--gold);
+            box-shadow: 0 3px 10px rgba(139, 0, 0, 0.5);
+            z-index: 10;
+        }
+
+        .click-hint {
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--soft-pink);
+            animation: pulse 2s infinite;
+            font-family: Georgia, serif;
+            font-size: 20px;
+            font-style: italic;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        /* Letter */
+        .letter {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 90%;
+            max-width: 700px;
+            max-height: 85vh;
+            background: var(--paper);
+            padding: 50px 40px 40px 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            z-index: 99;
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            overflow-y: auto;
+            border: 1px solid #e8d5b7;
+        }
+
+        .letter.show {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+
+        .letter-header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--subtle-border);
+            padding-bottom: 20px;
+        }
+
+        .letter-title {
+            font-family: Georgia, serif;
+            font-size: 56px;
+            color: #8b0000;
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        .letter-body {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #2c2c2c;
+            text-align: justify;
+        }
+
+        .letter-body p {
+            margin-bottom: 20px;
+        }
+
+        .letter-signature {
+            text-align: right;
+            margin-top: 40px;
+            margin-bottom: 30px;
+            font-family: Georgia, serif;
+            font-size: 24px;
+            color: #8b0000;
+            font-style: italic;
+        }
+
+        .close-letter {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 35px;
+            height: 35px;
+            background: #f5d5d5;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            color: #8b6b6b;
+        }
+
+        .close-letter:hover {
+            background: #d4a5a5;
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        .galaxy-btn {
+            display: block;
+            margin: 20px auto 0;
+            padding: 14px 35px;
+            background: linear-gradient(135deg, var(--deep-purple), #5c1a5c);
+            color: white;
+            border: 2px solid var(--gold);
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: Georgia, serif;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .galaxy-btn:hover {
+            background: linear-gradient(135deg, #5c1a5c, var(--deep-purple));
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(255, 215, 155, 0.4);
+        }
+
+        /* Galaxy View */
+        .galaxy-view {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 98;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.8s ease;
+        }
+
+        .galaxy-view.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .galaxy-canvas {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .constellation {
+            position: absolute;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .constellation-star {
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, var(--star-white), transparent);
+            border-radius: 50%;
+            position: relative;
+            animation: starPulse 2s infinite;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8),
+                        0 0 40px rgba(255, 215, 155, 0.4);
+        }
+
+        @keyframes starPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.8; }
+        }
+
+        .constellation-label {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(26, 20, 53, 0.95);
+            color: var(--gold);
+            padding: 10px 18px;
+            border-radius: 15px;
+            font-family: Georgia, serif;
+            font-size: 14px;
+            max-width: 280px;
+            white-space: normal;
+            text-align: center;
+            border: 1px solid var(--gold);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            line-height: 1.4;
+        }
+
+        .constellation:hover .constellation-label {
+            opacity: 1;
+        }
+
+        .constellation:hover .constellation-star {
+            animation: none;
+            transform: scale(1.5);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 1),
+                        0 0 60px var(--soft-pink);
+        }
+
+        .back-to-letter {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            padding: 12px 24px;
+            background: rgba(26, 20, 53, 0.8);
+            color: var(--gold);
+            border: 2px solid var(--gold);
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: Georgia, serif;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            z-index: 99;
+        }
+
+        .back-to-letter:hover {
+            background: rgba(26, 20, 53, 1);
+            transform: scale(1.05);
+        }
+
+        .galaxy-title {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: Georgia, serif;
+            font-size: 42px;
+            font-weight: bold;
+            font-style: italic;
+            color: var(--gold);
+            text-align: center;
+            text-shadow: 0 0 20px rgba(255, 215, 155, 0.6);
+            z-index: 99;
+        }
+
+        /* Shooting stars */
+        .shooting-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 10px 2px white;
+            animation: shoot 3s linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes shoot {
+            0% {
+                opacity: 1;
+                transform: translateX(0) translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(-300px) translateY(300px);
+            }
+        }
+
+        /* Decorative elements */
+        .heart-decoration {
+            position: fixed;
+            font-size: 20px;
+            opacity: 0.2;
+            animation: float 6s infinite ease-in-out;
+            z-index: 2;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        /* Scrollbar styling */
+        .letter::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .letter::-webkit-scrollbar-track {
+            background: #f1e8d8;
+        }
+
+        .letter::-webkit-scrollbar-thumb {
+            background: #d4a5a5;
+            border-radius: 4px;
+        }
+
+        .letter::-webkit-scrollbar-thumb:hover {
+            background: #c49090;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .letter {
+                padding: 30px 20px 20px 20px;
+                width: 95%;
+            }
+
+            .letter-title {
+                font-size: 42px;
+            }
+
+            .letter-body {
+                font-size: 16px;
+            }
+
+            .envelope {
+                width: 240px;
+                height: 150px;
+            }
+
+            .envelope-flap {
+                border-left: 120px solid transparent;
+                border-right: 120px solid transparent;
+                border-top: 85px solid var(--envelope-front);
+            }
+
+            .galaxy-title {
+                font-size: 32px;
+            }
+
+            .click-hint {
+                font-size: 18px;
+                bottom: -50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Starry background -->
+    <div class="stars" id="stars"></div>
+
+    <!-- Floating hearts -->
+    <div class="heart-decoration" style="top: 10%; left: 15%;">💕</div>
+    <div class="heart-decoration" style="top: 70%; left: 80%; animation-delay: 2s;">💖</div>
+    <div class="heart-decoration" style="top: 30%; left: 85%; animation-delay: 4s;">💗</div>
+    <div class="heart-decoration" style="top: 80%; left: 10%; animation-delay: 1s;">✨</div>
+
+    <!-- Envelope -->
+    <div class="envelope-container" id="envelopeContainer">
+        <div class="envelope" id="envelope">
+            <div class="envelope-flap"></div>
+            <div class="envelope-back"></div>
+            <div class="envelope-front"></div>
+            <div class="wax-seal">❤️</div>
+            <div class="click-hint">Haz clic para abrir</div>
+        </div>
+    </div>
+
+    <!-- Letter -->
+    <div class="letter" id="letter">
+        <button class="close-letter" id="closeLetter">✕</button>
+        
+        <div class="letter-header">
+            <h1 class="letter-title">Santiago</h1>
+        </div>
+
+        <div class="letter-body">
+            <p>
+                Sé que no estamos en nuestro mejor momento, que tú has cometido errores al igual que yo, 
+                que no nos hemos entendido. Pero sin importar lo que llegue a pasar entre nosotros, quiero 
+                que sepas que te agradezco por todo lo que has hecho por mí.
+            </p>
+
+            <p>
+                Por acompañarme cuando Abby murió, cuando necesitaba tu ayuda en la universidad, cuando me 
+                consolaste mientras lloraba, por los detalles que has tenido, las rosas que me has dado y 
+                otras cosas más.
+            </p>
+
+            <p>
+                Sin importar nada, tienes una parte de mi corazón, y llevas una parte de mi historia a donde 
+                quiera que vayas, así como yo llevo parte de la tuya...
+            </p>
+
+            <p>
+                Lo que vivimos no fue ni cerca de ser perfecto, sé que hubo cosas que nos faltaron, y tal vez 
+                habrán cosas que nunca lleguemos a recibir, pero a pesar de todo, llegamos a amarnos, y eso 
+                lo recordaré siempre.
+            </p>
+        </div>
+
+        <div class="letter-signature">
+            Con amor, Carolina ♡
+        </div>
+
+        <button class="galaxy-btn" id="galaxyBtn">Explora la galaxia</button>
+    </div>
+
+    <!-- Galaxy View -->
+    <div class="galaxy-view" id="galaxyView">
+        <button class="back-to-letter" id="backToLetter">← Volver a la carta</button>
+        <div class="galaxy-title">Nuestra Galaxia de Momentos</div>
+        <div class="galaxy-canvas" id="galaxyCanvas"></div>
+    </div>
+
+    <script>
+        // Create stars background
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 200; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsContainer.appendChild(star);
+            }
+
+            // Add shooting stars
+            for (let i = 0; i < 5; i++) {
+                const shootingStar = document.createElement('div');
+                shootingStar.className = 'shooting-star';
+                shootingStar.style.left = Math.random() * 100 + '%';
+                shootingStar.style.top = Math.random() * 50 + '%';
+                shootingStar.style.animationDelay = Math.random() * 5 + 's';
+                starsContainer.appendChild(shootingStar);
+            }
+        }
+
+        // Envelope interaction
+        const envelope = document.getElementById('envelope');
+        const envelopeContainer = document.getElementById('envelopeContainer');
+        const letter = document.getElementById('letter');
+        const closeLetter = document.getElementById('closeLetter');
+
+        envelope.addEventListener('click', () => {
+            envelope.classList.add('opening');
+            
+            setTimeout(() => {
+                envelopeContainer.classList.add('hidden');
+                setTimeout(() => {
+                    letter.classList.add('show');
+                }, 300);
+            }, 800);
+        });
+
+        closeLetter.addEventListener('click', () => {
+            letter.classList.remove('show');
+            setTimeout(() => {
+                envelopeContainer.classList.remove('hidden');
+                envelope.classList.remove('opening');
+            }, 800);
+        });
+
+        // Galaxy view
+        const galaxyBtn = document.getElementById('galaxyBtn');
+        const galaxyView = document.getElementById('galaxyView');
+        const backToLetter = document.getElementById('backToLetter');
+        const galaxyCanvas = document.getElementById('galaxyCanvas');
+
+        // Constellation words - memorias especiales de Carolina y Santiago
+        const constellations = [
+            'Cuando tuvimos nuestra llamada durante 5 horas seguidas',
+            'La primera vez que me dijiste te amo en geodesia',
+            'La primera vez que te quedaste conmigo e hicimos alitas',
+            'La primera vez que nos vimos',
+            'Cuando te robaste mi lápiz',
+            'Mi primera vez contigo',
+            'Cuando venías de sorpresa con flores',
+            'Cuando jugamos cartas y perdí',
+            'Cuando siempre me hiciste preocuparme por ti',
+            'Las noches en las que recé por ti',
+            'Cuando te di una cadena bendecida porque temía que algo te pasara',
+            'Cuando nos íbamos juntos en transmilenio',
+            'Nuestro primer viaje juntos a Flandes',
+            'El libro que hice para ti',
+            'Cuando te acompañaba en el trabajo de la tienda',
+            'Cuando no teníamos nada, y aun así nos enamoramos',
+            'Cuando nos dolía el corazón cada vez que peleábamos',
+            'Cuando nos extrañamos',
+            'Cuando le deseamos lo mejor al otro',
+            'Cuando nos apoyamos haciendo las tareas',
+            'Cuando pensamos en intentarlo una segunda vez'
+        ];
+
+        function createGalaxy() {
+            galaxyCanvas.innerHTML = '';
+            
+            constellations.forEach((word, index) => {
+                const constellation = document.createElement('div');
+                constellation.className = 'constellation';
+                
+                // Random positioning
+                const x = Math.random() * 80 + 10; // 10-90% to keep within view
+                const y = Math.random() * 80 + 10;
+                
+                constellation.style.left = x + '%';
+                constellation.style.top = y + '%';
+                
+                // Create star
+                const star = document.createElement('div');
+                star.className = 'constellation-star';
+                
+                // Create label
+                const label = document.createElement('div');
+                label.className = 'constellation-label';
+                label.textContent = word;
+                
+                constellation.appendChild(star);
+                constellation.appendChild(label);
+                galaxyCanvas.appendChild(constellation);
+                
+                // Stagger animation
+                constellation.style.opacity = '0';
+                setTimeout(() => {
+                    constellation.style.opacity = '1';
+                    constellation.style.transition = 'opacity 0.5s ease';
+                }, index * 100);
+            });
+        }
+
+        galaxyBtn.addEventListener('click', () => {
+            letter.classList.remove('show');
+            setTimeout(() => {
+                galaxyView.classList.add('active');
+                createGalaxy();
+            }, 800);
+        });
+
+        backToLetter.addEventListener('click', () => {
+            galaxyView.classList.remove('active');
+            setTimeout(() => {
+                letter.classList.add('show');
+            }, 800);
+        });
+
+        // Initialize
+        createStars();
+    </script>
+</body>
+</html>
